@@ -1,2 +1,7 @@
 streamlit
 watchdog
+git+https://github.com/huggingface/datasets
+transformers==4.19.4
+pytorch-lightning==1.6.4
+rouge_score
+torch

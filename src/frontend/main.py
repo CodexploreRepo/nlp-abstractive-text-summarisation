@@ -26,6 +26,7 @@ beam_size = int(st.sidebar.slider("beam size", 2, 12))
 # Summary output
 st.write("_"*40)
 st.write("### Summary result:")
+
 st.write(f"Model selected: **{model_name}**")
 
 if "summary" not in st.session_state:
