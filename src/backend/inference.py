@@ -1,6 +1,7 @@
 # @title `NewsSummary` Model Inference { form-width: "30%" }
 import torch
 import datasets
+import config
 import pandas as pd
 from backend.concept.abstract_model import NewsSummaryModel
 from typing import Union, List
@@ -31,17 +32,19 @@ class Inference:
         add_special_tokens=True,
         return_tensors="pt"
     )
+
   def summarize(self, 
                 text:str, 
                 max_length: int = 150, 
+                min_length: int = 50,
                 num_beams: int = 2):
     text_encoding = self.encoding_plus(text).to(self.DEVICE)
     generated_ids = self.model.model.generate(
         input_ids = text_encoding['input_ids'],
         attention_mask = text_encoding['attention_mask'],
-        max_length = 150,
-        min_length = 50,
-        num_beams = 2,
+        max_length = max_length,
+        min_length = min_length,
+        num_beams = num_beams,
         repetition_penalty=2.5,
         length_penalty=1.0,
         early_stopping=True
@@ -51,6 +54,7 @@ class Inference:
         for gen_id in generated_ids
     ]
     return " ".join(preds)
+
 
 if __name__ == "__main__":
     from backend.models import BartLargeSummaryModel
