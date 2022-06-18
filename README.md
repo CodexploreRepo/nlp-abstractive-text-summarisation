@@ -19,3 +19,10 @@
 At the main directory
 
 - `streamlit run src/frontend/main.py` to run the streamlit app
+
+# 3. Resources
+
+- [BERT Summerization](https://github.com/VincentK1991/BERT_summarization_1)
+- [GPT-2 Fine-Tuning w/ Hugging Face & PyTorch](https://colab.research.google.com/drive/13dZVYEOMhXhkXWfvSMVM1TTtUDrT6Aeh?usp=sharing&fbclid=IwAR1pWE1VyfnjoYqQOqKEcmDxaBNvt40HUmODbjoMsxKVe3GDB41h4smqSCY#scrollTo=NKGBoVwuhM4H)
+- [Text Summarization with GPT2 and Layer AI](https://towardsdatascience.com/text-summarization-with-gpt2-and-layer-ai-599625085d8e)
+- [Hugging Face's Multi-Lang Summarization Course](https://huggingface.co/course/chapter7/5?fw=tf&fbclid=IwAR30XFiZxnOFPgp-sDn1BioScgMGdoHnfqlJWeWllfRasgyKHbnPTLGTWv)

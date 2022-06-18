@@ -10,7 +10,7 @@ greeting = "Good Morning" if 5<=hour<12 else "Good Afternoon" if 12<=hour<18 els
 # Set up webframe
 st.set_page_config(page_title=config.PAGE_TITLE, layout="wide", initial_sidebar_state="auto")
 
-st.title(config.TITLE)
+st.title(config.PAGE_TITLE)
 st.write(f"""
     ### {greeting} ! 
     #### Personalized Music Recommendation
