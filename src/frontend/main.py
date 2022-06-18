@@ -13,9 +13,8 @@ st.title(config.PAGE_TITLE)
 st.write(f"### {greeting} ! ")
 
 # Model selection
-model_list = ["BART", "T5"]
+model_list = ["BART-base", "BART-large", "T5-base", "T5-small"]
 model_name = st.sidebar.selectbox("Select Model", model_list)
-st.write(f"Model selected: **{model_name}**")
 
 # Document input
 document = st.text_area("Input Text to be summarized")
@@ -27,31 +26,13 @@ beam_size = int(st.sidebar.slider("beam size", 2, 12))
 # Summary output
 st.write("_"*40)
 st.write("### Summary result:")
+
+st.write(f"Model selected: **{model_name}**")
+
 if "summary" not in st.session_state:
     st.session_state.summary = ""
+
 if st.button("GENERATE"):
-    st.session_state.summary = inference.summarize(document, words_in_summary, beam_size)
-    st.text(st.session_state.summary)
-else:
-    st.text(st.session_state.summary)
+    st.session_state.summary = inference.engine(document, model_name, words_in_summary, beam_size)
 
-# # get top artist
-# st.write(f"Most Popular Artist in {config.COUNTRY}")
-# top_artist = song_scraper.get_top_artist_by_geo("Singapore")
-# if 'Error' in top_artist:
-#     st.write("Can't fetch any artists")
-# else:
-#     for tr in top_artist:
-#         url = tr['url']
-#         st.markdown(f"[- {tr['name']}](%s)" % url)
-
-
-# # get top tracks
-# st.write(f"Most Popular Song in {config.COUNTRY}")
-# top_song = song_scraper.get_top_track_by_geo("Singapore")
-# if 'Error' in top_song:
-#     st.write("Can't fetch any tracks")
-# else:
-#     for tr in top_song:
-#         url = tr['url']
-#         st.markdown(f"[- {tr['name']}](%s)" % url)
+st.text(st.session_state.summary)
