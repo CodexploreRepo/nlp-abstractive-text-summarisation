@@ -1,7 +1,22 @@
-from backend.models import BartLargeSummaryModel, T5BaseSummaryModel
+from backend.models import BartLargeSummaryModel, BartBaseSummaryModel, \
+    T5BaseSummaryModel, T5SmallSummaryModel, T5V11SummaryModel
 from backend.inference import Inference
 from config import MODEL_CHKPT_PATH
 from transformers import BartTokenizerFast, T5TokenizerFast
+
+class BartBaseEngine:
+    def __init__(self, chkpt_name):
+        self.model = BartBaseSummaryModel.load_from_checkpoint(MODEL_CHKPT_PATH / f'{chkpt_name}.ckpt')   
+        self.tokenizer = BartTokenizerFast.from_pretrained(BartBaseSummaryModel.MODEL_NAME)
+        self.model_infer = Inference(self.model, self.tokenizer)
+    
+    def summarize(self, 
+                  text:str, 
+                  max_length: int = 150, 
+                  min_length: int = 50,
+                  num_beams: int = 2):
+    
+        return self.model_infer.summarize(text, max_length, min_length, num_beams)
 
 class BartLargeEngine:
     def __init__(self, chkpt_name):
@@ -31,6 +46,33 @@ class T5BaseEngine:
     
         return self.model_infer.summarize(text, max_length, min_length, num_beams)
 
+class T5SmallEngine:
+    def __init__(self, chkpt_name):
+        self.model = T5SmallSummaryModel.load_from_checkpoint(MODEL_CHKPT_PATH / f'{chkpt_name}.ckpt')
+        self.tokenizer = T5TokenizerFast.from_pretrained(T5SmallSummaryModel.MODEL_NAME)
+        self.model_infer = Inference(self.model, self.tokenizer)
+    
+    def summarize(self, 
+                  text:str, 
+                  max_length: int = 150, 
+                  min_length: int = 50,
+                  num_beams: int = 2):
+    
+        return self.model_infer.summarize(text, max_length, min_length, num_beams)
+
+class T5V11Engine:
+    def __init__(self, chkpt_name):
+        self.model = T5V11SummaryModel.load_from_checkpoint(MODEL_CHKPT_PATH / f'{chkpt_name}.ckpt')
+        self.tokenizer = T5TokenizerFast.from_pretrained(T5BaseSummaryModel.MODEL_NAME)
+        self.model_infer = Inference(self.model, self.tokenizer)
+    
+    def summarize(self, 
+                  text:str, 
+                  max_length: int = 150, 
+                  min_length: int = 50,
+                  num_beams: int = 2):
+    
+        return self.model_infer.summarize(text, max_length, min_length, num_beams)
 
 if __name__ == "__main__":
     t5_base_engine = T5BaseEngine("Best-T5-epoch=0-step=10500-val_loss=1.67")
