@@ -49,9 +49,9 @@ model_name = st.sidebar.selectbox("Select Model", model_list)
 document = st.text_area("Input Text to be summarized", height=250)
 
 # Slide bars
-max_length = st.sidebar.slider("summary max length", 50, 250)
-min_length = st.sidebar.slider("summar min length", 10, 100)
-beam_size = st.sidebar.slider("beam size configuration", 2, 12)
+max_length = st.sidebar.slider("Summary MAX length", 50, 250)
+min_length = st.sidebar.slider("Summar MIN length", 10, 100)
+beam_size = st.sidebar.slider("Beam size configuration", 2, 12)
 
 # Summary output
 st.write("_"*40)
