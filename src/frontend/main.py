@@ -42,26 +42,32 @@ if not st.session_state.models_engine:
     print(st.session_state.models_engine)
 
 # Model selection
-model_list = ["BART-base", "BART-large", "T5-base", "T5-small", "T5-v11"]
-model_name = st.sidebar.selectbox("Select Model", model_list)
+models = ["BART-base", "BART-large", "T5-base", "T5-small", "T5-v11"]
+model_list = st.sidebar.multiselect("Model Selection", models)
 
 # Document input
 document = st.text_area("Input Text to be summarized", height=250)
 
 # Slide bars
 max_length = st.sidebar.slider("Summary MAX length", 50, 250)
-min_length = st.sidebar.slider("Summar MIN length", 10, 100)
+min_length = st.sidebar.slider("Summary MIN length", 10, 100)
 beam_size = st.sidebar.slider("Beam size configuration", 2, 12)
 
 # Summary output
 st.write("_"*40)
 st.write("### Summary result:")
-st.write(f"Model selected: **{model_name}**")
+st.write(f"MAX Length: **{max_length}**")
+st.write(f"MIN Length: **{min_length}**")
+st.write(f"Beam size configuration: **{beam_size}**")
 
 if st.button("GENERATE"):
-    print("Generating summary...")
+    print("Generating summaries...")
     print(st.session_state.models_engine)
     
-    st.session_state.summary = st.session_state.models_engine[model_name].summarize(document, max_length, min_length, beam_size)
+    st.session_state.summary = ""
+    for model in model_list:
+        summary = st.session_state.models_engine[model].summarize(document, max_length, min_length, beam_size)
+        st.session_state.summary += "\n\n" + f"{model.upper()}: \n" + summary
     print("Summary generated.")
+
 st.write(st.session_state.summary)
